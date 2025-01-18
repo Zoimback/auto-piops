@@ -22,15 +22,11 @@ void call(){
         }
 
         stage('Build') {
-            sh{
-                echo "Ejecutando build..."
-            }
+            println "Ejecutando build..."   
         }
 
         stage('Deploy') {
-            sh {
-                echo "Desplegando en producción..."
-            }
+            println "Desplegando en producción..."
         }
     }
 }
