@@ -17,7 +17,7 @@ void call(){
         stage('Checkout') {
             sh{
                 echo "Clonando el repositorio..."
-                git branch: 'develop', url: https://github.com/Zoimback/auto-piops.git'
+                git branch: 'develop', url: "https://github.com/Zoimback/auto-piops.git"
             }
         }
 
