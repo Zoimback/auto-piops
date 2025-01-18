@@ -6,7 +6,7 @@ void call(){
 
     node('build'){
         
-        stage('Read Parameters') {
+        stage('Read parameters') {
            properties([
                 parameters([
                     //choice(name: 'ENTORNO', choices: ['desarrollo', 'producción'], description: 'Selecciona el entorno de despliegue')
@@ -14,8 +14,8 @@ void call(){
                 ])
         }
 
-        stage('Clone Repo') {
-            script{
+        stage('Checkout') {
+            sh{
                 GitUtils.cloneRepository('develop', "https://github.com/Zoimback/auto-piops.git")
             }
         }
