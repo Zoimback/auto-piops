@@ -1,12 +1,12 @@
 //import main.jenkins.utils.FileUtils
-//import main.jenkins.utils.GitUtils
+import main.jenkins.utils.GitUtils
 
 
 void call(){
 
     node('build'){
         
-        stage('Read parameters') {
+        stage('Read Parameters') {
            properties([
                 parameters([
                     //choice(name: 'ENTORNO', choices: ['desarrollo', 'producción'], description: 'Selecciona el entorno de despliegue')
@@ -14,9 +14,8 @@ void call(){
                 ])
         }
 
-        stage('Checkout') {
-                println "Clonando el repositorio..."
-                git branch: 'develop', url: "https://github.com/Zoimback/auto-piops.git"
+        stage('Clone Repo') {
+            GitUtils.cloneRepository('develop', "https://github.com/Zoimback/auto-piops.git")
         }
 
         stage('Build') {
