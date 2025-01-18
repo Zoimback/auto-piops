@@ -15,7 +15,7 @@ void call(){
         }
 
         stage('Checkout') {
-            sh{
+            script{
                 GitUtils.cloneRepository('develop', "https://github.com/Zoimback/auto-piops.git")
             }
         }
