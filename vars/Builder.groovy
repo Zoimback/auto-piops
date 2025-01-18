@@ -15,7 +15,9 @@ void call(){
         }
 
         stage('Clone Repo') {
-            GitUtils.cloneRepository('develop', "https://github.com/Zoimback/auto-piops.git")
+            script{
+                GitUtils.cloneRepository('develop', "https://github.com/Zoimback/auto-piops.git")
+            }
         }
 
         stage('Build') {
