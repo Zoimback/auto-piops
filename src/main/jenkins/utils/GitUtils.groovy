@@ -9,7 +9,7 @@ class GitUtils {
      * @param url URL del repositorio
      * @param branch Rama del repositorio
      */
-    static void cloneRepository(String url, String branch) {
+    static void cloneRepository(String branch, String url) {
         git branch: branch, url: url
     }   
 }
