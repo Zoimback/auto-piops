@@ -10,6 +10,6 @@ class GitUtils {
      * @param branch Rama del repositorio
      */
     static void cloneRepository(String branch, String url) {
-        git branch: branch, url: url
+        sh "git clone -b ${branch} ${url}"
     }   
 }
