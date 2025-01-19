@@ -38,7 +38,7 @@ class GitUtils {
             submoduleCfg: [],
             userRemoteConfigs: [[
                 url: url,
-                //credentialsId: credentialsId  // Se comenta porque no se está utilizando. Por si se necesita en un futuro la autenticación 
+                //credentialsId: credentialsId  // Se comenta porque no se está utilizando. Por si se necesita la autenticación  en un futuro 
             ]]
         ])
     }
