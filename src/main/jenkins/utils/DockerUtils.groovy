@@ -24,14 +24,14 @@ class DockerUtils {
      * @param imageName Nombre de la imagen
      * @param dockerfilePath Ruta del Dockerfile
      */
-    void buildImage(String imageName, String dockerfilePath) {
+    void buildImage(String imageName, String dockerfilePath, String path) {
         // Validar que los parámetros sean válidos
-        if (!imageName || !dockerfilePath) {
-            throw new IllegalArgumentException("Parameters imageName and dockerfilePath are must be provided")
+        if (!imageName || !dockerfilePath || !path) {
+            throw new IllegalArgumentException("Parameters imageName, dockerfilePath and path are must be provided")
         }
 
         // Construir la imagen de Docker
-        pipelineContext.sh "docker build -t ${imageName} -f ${dockerfilePath}"
+        pipelineContext.sh "docker build -t ${imageName} -f ${dockerfilePath} ${path}"
     }
 
     /**
