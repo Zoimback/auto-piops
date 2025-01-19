@@ -5,6 +5,13 @@ import main.jenkins.utils.GitUtils
 void call(){
 
     node('build'){
+
+
+        /**
+        * Contexto de la ejecución del pipeline
+        */
+
+
         
         stage('Read parameters') {
            properties([
@@ -15,9 +22,8 @@ void call(){
         }
 
         stage('Checkout') {
-            script{
-                GitUtils.cloneRepository('develop', "https://github.com/Zoimback/auto-piops.git")
-            }
+            def gitUtils = new GitUtils()
+            gitUtils.cloneRepository('develop', 'https://github.com/Zoimback/auto-piops.git')
         }
 
         stage('Build') {
