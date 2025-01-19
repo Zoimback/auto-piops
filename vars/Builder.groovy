@@ -15,19 +15,32 @@ void call(){
 
         stage('Checkout') {
             def gitUtils = new GitUtils(this) //Contexto de la pipeline
-            gitUtils.cloneRepository('develop', 'https://github.com/Zoimback/auto-piops.git')
+            gitUtils.cloneRepository('develop', 'https://github.com/Zoimback/api-sensor.git')
+        }
+        
+        stage('Build-Docker Image') {
+            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+            dockerUtils.buildImage('api-sensor', 'Dockerfile')
         }
 
-        stage('Build') {
-            println "Ejecutando build..."   
+        stage('Build-Docker Container') {
+            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+            dockerUtils.buildContainer('api-sensor', 'api-sensor')
         }
 
-        stage('Deploy') {
-            println "Desplegando en producción..."
+        stage('Delete-Docker Container') {
+            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+            dockerUtils.removeContainer('api-sensor')
+        }
+
+        stage('Delete-Docker Image') {
+            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+            dockerUtils.removeImage('api-sensor')
         }
 
         stage('Clean') {
             cleanWs() // Limpia el workspace
         }
+        
     }
 }
