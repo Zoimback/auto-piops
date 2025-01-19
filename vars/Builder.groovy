@@ -27,7 +27,7 @@ void call(){
         }
 
         stage('Clean') {
-            CleanWs()
+            cleanWs() // Limpia el workspace
         }
     }
 }
