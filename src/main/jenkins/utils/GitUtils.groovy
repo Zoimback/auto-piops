@@ -13,8 +13,8 @@ class GitUtils {
      */
     void cloneRepository(String branch, String url) {
         // Validar que los parámetros sean válidos
-        if (!branch || !url || !credentialsId) {
-            throw new IllegalArgumentException("Los parámetros branch, url y credentialsId son obligatorios")
+        if (!branch || !url) {
+            throw new IllegalArgumentException("Parameters branch and url are must be provided")
         }
 
         // Checkout del repositorio
