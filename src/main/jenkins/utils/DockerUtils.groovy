@@ -31,7 +31,7 @@ class DockerUtils {
         }
 
         // Construir la imagen de Docker
-        pipelineContext.sh "docker build -t ${imageName} ${dockerfilePath}"
+        pipelineContext.sh "docker build -t ${imageName} -f ${dockerfilePath}"
     }
 
     /**

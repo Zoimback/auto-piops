@@ -21,7 +21,7 @@ void call(){
         
         stage('Build-Docker Image') {
             def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
-            dockerUtils.buildImage('api-sensor', "${env.WORKSPACE}/DockerFile")
+            dockerUtils.buildImage('api-sensor', "${env.WORKSPACE}/Dockerfile")
         }
 
         stage('Build-Docker Container') {
