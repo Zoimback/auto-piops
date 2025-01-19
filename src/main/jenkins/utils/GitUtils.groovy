@@ -5,6 +5,18 @@ package main.jenkins.utils
  */
 class GitUtils {
 
+
+   def pipelineContext
+
+    /**
+     * Constructor que recibe el contexto de la pipeline
+     * @param pipelineContext El contexto de la pipeline (this)
+     */
+    GitUtils(def pipelineContext) {
+        this.pipelineContext = pipelineContext
+    }
+
+
     /**
      * Método que clona un repositorio de Git
      * @param branch Rama del repositorio
@@ -18,7 +30,7 @@ class GitUtils {
         }
 
         // Checkout del repositorio
-        checkout([
+        pipelineContext.checkout([
             $class: 'GitSCM',
             branches: [[name: "*/${branch}"]],
             doGenerateSubmoduleConfigurations: false,

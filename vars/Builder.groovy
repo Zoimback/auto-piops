@@ -22,7 +22,7 @@ void call(){
         }
 
         stage('Checkout') {
-            def gitUtils = new GitUtils()
+            def gitUtils = new GitUtils(this)
             gitUtils.cloneRepository('develop', 'https://github.com/Zoimback/auto-piops.git')
         }
 
