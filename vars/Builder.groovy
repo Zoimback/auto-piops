@@ -4,15 +4,7 @@ import main.jenkins.utils.GitUtils
 
 void call(){
 
-    node('build'){
-
-
-        /**
-        * Contexto de la ejecución del pipeline
-        */
-
-
-        
+    node('build'){        
         stage('Read parameters') {
            properties([
                 parameters([
@@ -22,7 +14,7 @@ void call(){
         }
 
         stage('Checkout') {
-            def gitUtils = new GitUtils(this)
+            def gitUtils = new GitUtils(this) //Contexto de la pipeline
             gitUtils.cloneRepository('develop', 'https://github.com/Zoimback/auto-piops.git')
         }
 
@@ -32,6 +24,10 @@ void call(){
 
         stage('Deploy') {
             println "Desplegando en producción..."
+        }
+
+        stage('Clean') {
+            CleanWs()
         }
     }
 }
