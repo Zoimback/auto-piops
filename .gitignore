@@ -1,0 +1,39 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Blue Ocean plugin
+.blueocean/
+
+# Pipeline logs
+pipeline.log
+
+# Node specific files
+node_modules/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Jenkins workspace
+workspace/
+
+# Jenkins build artifacts
+build/
+
+# Gradle build directory
+.gradle/
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# Eclipse files
+.project
+.classpath
+.settings/
+
+# VS Code files
+.vscode/
