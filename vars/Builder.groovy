@@ -10,6 +10,7 @@ void call(){
            properties([
                 parameters([
                     //choice(name: 'ENTORNO', choices: ['desarrollo', 'producción'], description: 'Selecciona el entorno de despliegue')
+                    choice(name: 'Rehacer Imagen', choices: ['Si', 'No'], description: 'Selecciona si quieres rehacer la imagen de docker')
                     ])
                 ])
         }
@@ -18,7 +19,13 @@ void call(){
             def gitUtils = new GitUtils(this) //Contexto de la pipeline
             gitUtils.cloneRepository('develop', 'https://github.com/Zoimback/api-sensor.git')
         }
-        
+
+        if (params['Rehacer Imagen'] == 'Si' ) {
+            stage('Delete-Docker Image') {
+                def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+                dockerUtils.removeImage('api-sensor')
+            }
+        }
         stage('Build-Docker Image') {
             def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
             dockerUtils.buildImage('api-sensor', "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
@@ -34,10 +41,10 @@ void call(){
             dockerUtils.removeContainer('api-sensor')
         }
 
-        stage('Delete-Docker Image') {
+        /**stage('Delete-Docker Image') {
             def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
             dockerUtils.removeImage('api-sensor')
-        }
+        }*/
 
         stage('Clean') {
             cleanWs() // Limpia el workspace
