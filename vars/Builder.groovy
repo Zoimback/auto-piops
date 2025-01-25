@@ -11,34 +11,34 @@ void call(){
                 parameters([
                     //choice(name: 'ENTORNO', choices: ['desarrollo', 'producción'], description: 'Selecciona el entorno de despliegue')
                     choice(name: 'Rehacer Imagen', choices: ['Si', 'No'], description: 'Selecciona si quieres rehacer la imagen de docker')
+                    choice(name: 'Imagen', choices: ['api-sensor', 'sensor'], description: 'Selecciona que imagen de docker quieres construir')
                     ])
                 ])
         }
 
+        def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+
         stage('Checkout') {
             def gitUtils = new GitUtils(this) //Contexto de la pipeline
-            gitUtils.cloneRepository('develop', 'https://github.com/Zoimback/api-sensor.git')
+            gitUtils.cloneRepository('develop', "https://github.com/Zoimback/${params['Imagen']}.git")
         }
 
         if (params['Rehacer Imagen'] == 'Si' ) {
             stage('Delete-Docker Image') {
-                def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
-                dockerUtils.removeImage('api-sensor')
+                dockerUtils.removeImage("params['Imagen']")
+                dockerUtils.buildImage("params['Imagen']", "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
             }
         }
         stage('Build-Docker Image') {
-            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
-            dockerUtils.buildImage('api-sensor', "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
+            dockerUtils.buildImage("params['Imagen']", "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
         }
 
         stage('Build-Docker Container') {
-            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
-            dockerUtils.buildContainer('api-sensor', 'api-sensor')
+            dockerUtils.buildContainer("params['Imagen']", "params['Imagen']")
         }
 
         stage('Delete-Docker Container') {
-            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
-            dockerUtils.removeContainer('api-sensor')
+            dockerUtils.removeContainer("params['Imagen']")
         }
 
         /**stage('Delete-Docker Image') {
