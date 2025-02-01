@@ -1,9 +1,14 @@
+package main.jenkins.data
+
 @GrabConfig(systemClassLoader=true)
 @Grab('mysql:mysql-connector-java:8.0.26')
 
 import groovy.sql.Sql
 
 
+/**
+ * Clase que contiene métodos para ejecutar queries en una base de datos
+ */
 class DBconector {
 
 

@@ -1,7 +1,7 @@
 //import main.jenkins.utils.FileUtils
 import main.jenkins.utils.GitUtils
 import main.jenkins.utils.DockerUtils
-
+import main.jenkins.data.DBconector
 
 void call(){
 
@@ -10,7 +10,7 @@ void call(){
            properties([
                 parameters([
                     //choice(name: 'ENTORNO', choices: ['desarrollo', 'producción'], description: 'Selecciona el entorno de despliegue')
-                    choice(name: 'Rehacer Imagen', choices: ['Si', 'No'], description: 'Selecciona si quieres rehacer la imagen de docker')
+                    choice(name: 'Rehacer Imagen', choices: ['Si', 'No'], description: 'Selecciona si quieres rehacer la imagen de docker'),
                     choice(name: 'Imagen', choices: ['api-sensor', 'sensor'], description: 'Selecciona que imagen de docker quieres construir')
                     ])
                 ])
