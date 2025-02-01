@@ -1,0 +1,6 @@
+{
+    "TEST": {
+        "insert": "INSERT INTO audit (Aplication, Repository, End, Branch) VALUES ('Auto-Piops', 'Desarrollo', 'Good', 'main')",
+        "select": "SELECT * FROM audit"
+    }
+}

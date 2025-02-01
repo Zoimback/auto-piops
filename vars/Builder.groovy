@@ -46,6 +46,11 @@ void call(){
             dockerUtils.removeImage('api-sensor')
         }*/
 
+        stage('DB Connection') {
+            def dbconector = new DBconector(this) //Contexto de la pipeline
+            dbconector.executeQuery("SELECT * FROM audit")
+        }
+
         stage('Clean') {
             cleanWs() // Limpia el workspace
         }
