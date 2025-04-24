@@ -19,6 +19,13 @@ void call(){
             //def gitUtils = new GitUtils(this) //Contexto de la pipeline
             //gitUtils.cloneRepository('develop', "https://github.com/Zoimback/${params['Imagen']}.git")
             echo "Estoy en checkout"
+            def branch = env.BRANCH_NAME
+                        def job = env.JOB_NAME
+                        def url = scm?.getUserRemoteConfigs()?.first()?.getUrl() ?: 'Desconocido'
+
+                        echo "Rama actual: ${branch}"
+                        echo "Job: ${job}"
+                        echo "Repo Git: ${url}"
         }
         stage('Printeo'){
             echo "Esto tira"
