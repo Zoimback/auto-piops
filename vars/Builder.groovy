@@ -46,7 +46,6 @@ void call(){
         }
 
         stage('Delete-Docker Image') {
-            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
             dockerUtils.removeImage('api-sensor')
         }
 
