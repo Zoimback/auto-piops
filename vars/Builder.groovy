@@ -16,46 +16,59 @@ void call(){
         def config
 
         def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+        try{
 
-        stage('Checkout') {
-            def gitUtils = new GitUtils(this) //Contexto de la pipeline
-            def url = scm?.getUserRemoteConfigs()?.first()?.getUrl() ?: 'Desconocido'
-            def rama = env.BRANCH_NAME
-            gitUtils.cloneRepository(rama, url)
-        }
+            stage('Checkout') {
+                def gitUtils = new GitUtils(this) //Contexto de la pipeline
+                def url = scm?.getUserRemoteConfigs()?.first()?.getUrl() ?: 'Desconocido'
+                def rama = env.BRANCH_NAME
+                gitUtils.cloneRepository(rama, url)
+            }
 
-        stage('Obtener Archivo de Configuracion') {
-            echo 'Obteniendo archivo de configuracion'
-            config = readYaml file: 'config/.ci-config.yml'
+            stage('Obtener Archivo de Configuracion') {
+                echo 'Obteniendo archivo de configuracion'
+                config = readYaml file: 'config/.ci-config.yml'
 
-        }
+            }
 
-        stage('Build-Docker Image') {
-            dockerUtils.buildImage(config.name, "${env.WORKSPACE}/${config.image.workdir}", "${env.WORKSPACE}")
-        }
+            stage('Build-Docker Image') {
+                dockerUtils.buildImage(config.name, "${env.WORKSPACE}/${config.image.workdir}", "${env.WORKSPACE}")
+            }
 
-        stage('Build-Docker Container') {
-            dockerUtils.buildContainer(config.name, config.name)
-        }
-        stage('Compilation'){
-            dockerUtils.executeComand(config.name, config.compilation.command)
-        }
+            stage('Build-Docker Container') {
+                dockerUtils.buildContainer(config.name, config.name)
+            }
+            stage('Compilation'){
+                dockerUtils.executeComand(config.name, config.compilation.command)
+            }
 
-        stage('Test Execution'){
-            dockerUtils.executeComand(config.name, config.test.command)
-        }
+            stage('Test Execution'){
+                dockerUtils.executeComand(config.name, config.test.command)
+            }
 
-        stage('Artifacts'){
-            archiveArtifacts artifacts: config.file, allowEmptyArchive: true
+            stage('Artifacts'){
+                archiveArtifacts artifacts: config.compilation.file, allowEmptyArchive: true
+            }
         }
+        catch (Exception e) {
+            echo "Error: ${e.message}"
+            currentBuild.result = 'FAILURE'
+        }
+        finally {
+            stage('Delete-Docker Container') {
+                dockerUtils.removeContainer(config.name)
+            }
 
-        stage('Delete-Docker Container') {
-            dockerUtils.removeContainer(config.name)
+            stage('Delete-Docker Image') {
+                dockerUtils.removeImage(config.name)
+            }
+            stage('Clean') {
+                cleanWs() // Limpia el workspace
+            }
         }
+        
 
-        stage('Delete-Docker Image') {
-            dockerUtils.removeImage(config.name)
-        }
+       
 
         /*stage('Mail') {
             def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
@@ -67,9 +80,7 @@ void call(){
             dbconector.executeQuery("SELECT * FROM audit")
         }*/
 
-        stage('Clean') {
-            cleanWs() // Limpia el workspace
-        }
+        
         
     }
 }

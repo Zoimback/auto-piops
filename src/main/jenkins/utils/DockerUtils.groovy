@@ -89,7 +89,7 @@ class DockerUtils {
             throw new IllegalArgumentException("Parameter command must be provided")
         }
         // Ejecutar el comando en el contenedor de Docker
-        pipelineContext.sh "docker exec -it ${containerName} ${command}"
+        pipelineContext.sh "docker exec -i ${containerName} ${command}"
     }
 
 
