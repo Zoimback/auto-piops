@@ -38,15 +38,15 @@ void call(){
             dockerUtils.buildContainer(config.name, config.name)
         }
         stage('Compilation'){
-            echo 'Compilacion del codigo'
+            dockerUtils.executeComand(config.name, config.compilation.command)
         }
 
         stage('Test Execution'){
-            echo 'Test del codigo'
+            dockerUtils.executeComand(config.name, config.test.command)
         }
 
         stage('Artifacts'){
-            archiveArtifacts artifacts: 'ARTEFACTO.csv', allowEmptyArchive: true
+            archiveArtifacts artifacts: config.file, allowEmptyArchive: true
         }
 
         stage('Delete-Docker Container') {

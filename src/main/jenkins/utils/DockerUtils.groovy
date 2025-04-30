@@ -78,6 +78,20 @@ class DockerUtils {
         pipelineContext.sh "docker rmi -f ${imageName}"
     }
 
+    /**
+     * Método que ejecuta comandos en un contenedor de Docker
+     * @param containerName nombre del contenedor
+     * @param command Comando a ejecutar
+     */
+    void executeComand(String containerName, String command) {
+        // Validar que los parámetros sean válidos
+        if (!command) {
+            throw new IllegalArgumentException("Parameter command must be provided")
+        }
+        // Ejecutar el comando en el contenedor de Docker
+        pipelineContext.sh "docker exec -it ${containerName} ${command}"
+    }
+
 
     
 }
