@@ -47,6 +47,7 @@ void call(){
             }
 
             stage('Artifacts'){
+                sh "mkdir -p bin"
                 dockerUtils.copyCommand(config.name, config.compilation.path, config.compilation.file)
                 archiveArtifacts artifacts: "./bin/${config.compilation.file}", allowEmptyArchive: true
             }
