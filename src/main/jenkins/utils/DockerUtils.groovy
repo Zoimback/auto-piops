@@ -85,11 +85,26 @@ class DockerUtils {
      */
     void executeComand(String containerName, String command) {
         // Validar que los parámetros sean válidos
-        if (!command) {
+        if (!command || !containerName) {
             throw new IllegalArgumentException("Parameter command must be provided")
         }
         // Ejecutar el comando en el contenedor de Docker
         pipelineContext.sh "docker exec -i ${containerName} ${command}"
+    }
+
+    /**
+     * Método que copia archivos desde el contenedor de Docker
+     * @param containerName nombre del contenedor
+     * @param file nombre del archivo a copiar
+     * @param path ruta del contenedor
+     */
+    void copyCommand (String containerName, String path, String file) {
+        // Validar que los parámetros sean válidos
+        if (!file || !containerName || !path) {
+            throw new IllegalArgumentException("Parameter command must be provided")
+        }
+        // Ejecutar el comando en el contenedor de Docker
+        pipelineContext.sh "docker cp  ${containerName}:${path}${file} ."
     }
 
 
