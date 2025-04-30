@@ -31,11 +31,11 @@ void call(){
         }
 
         stage('Build-Docker Image') {
-            dockerUtils.buildImage(config.name, "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
+            dockerUtils.buildImage(config.name, "${env.WORKSPACE}/${config.image.workdir}", "${env.WORKSPACE}")
         }
 
         stage('Build-Docker Container') {
-            dockerUtils.buildContainer("params['Imagen']", "params['Imagen']")
+            dockerUtils.buildContainer(config.name, config.name)
         }
         stage('Compilation'){
             echo 'Compilacion del codigo'
@@ -50,11 +50,11 @@ void call(){
         }
 
         stage('Delete-Docker Container') {
-            dockerUtils.removeContainer("params['Imagen']")
+            dockerUtils.removeContainer(config.name)
         }
 
         stage('Delete-Docker Image') {
-            dockerUtils.removeImage('api-sensor')
+            dockerUtils.removeImage(config.name)
         }
 
         /*stage('Mail') {

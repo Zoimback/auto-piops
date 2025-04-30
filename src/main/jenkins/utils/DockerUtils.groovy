@@ -23,6 +23,7 @@ class DockerUtils {
      * Método que construye una imagen de Docker
      * @param imageName Nombre de la imagen
      * @param dockerfilePath Ruta del Dockerfile
+     * @param path Ruta del contexto de construcción
      */
     void buildImage(String imageName, String dockerfilePath, String path) {
         // Validar que los parámetros sean válidos
