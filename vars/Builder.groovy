@@ -1,7 +1,7 @@
 //import main.jenkins.utils.FileUtils
-import main.jenkins.utils.GitUtils
+//import main.jenkins.utils.GitUtils
 import main.jenkins.utils.DockerUtils
-import main.jenkins.data.DBconector
+//import main.jenkins.data.DBconector
 
 void call(){
 
