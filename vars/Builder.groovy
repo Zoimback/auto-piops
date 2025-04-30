@@ -38,8 +38,8 @@ void call(){
             stage('Build-Docker Container') {
                 dockerUtils.buildContainer(config.name, config.name)
             }
-            
-            if (config.start.activate == true) {
+
+            if (config.compilation.activate == true) {
                 stage('Compilation'){
                     dockerUtils.executeComand(config.name, config.compilation.command)
                 }
