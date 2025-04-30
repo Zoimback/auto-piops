@@ -38,25 +38,32 @@ void call(){
             stage('Build-Docker Container') {
                 dockerUtils.buildContainer(config.name, config.name)
             }
-            stage('Compilation'){
-                dockerUtils.executeComand(config.name, config.compilation.command)
+            
+            if (config.start.activate == true) {
+                stage('Compilation'){
+                    dockerUtils.executeComand(config.name, config.compilation.command)
+                }
+                stage('Artifacts'){
+                    sh "mkdir -p bin"
+                    dockerUtils.copyCommand(config.name, config.compilation.path, config.compilation.file)
+                    archiveArtifacts artifacts: "bin/${config.compilation.file}", allowEmptyArchive: true
+                }
             }
+           
+            if (config.test.activate == true) {
+                stage('Test Execution'){
+                    dockerUtils.executeComand(config.name, config.test.command)
+                }
+            } 
 
-            stage('Test Execution'){
-                dockerUtils.executeComand(config.name, config.test.command)
-            }
-
-            stage('Artifacts'){
-                sh "mkdir -p bin"
-                dockerUtils.copyCommand(config.name, config.compilation.path, config.compilation.file)
-                archiveArtifacts artifacts: "bin/${config.compilation.file}", allowEmptyArchive: true
-            }
+            
         }
         catch (Exception e) {
             echo "Error: ${e.message}"
             currentBuild.result = 'FAILURE'
         }
         finally {
+
             stage('Delete-Docker Container') {
                 dockerUtils.removeContainer(config.name)
             }
