@@ -16,6 +16,7 @@ void call(){
         def config
 
         def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+
         try{
 
             stage('Checkout') {
@@ -43,6 +44,13 @@ void call(){
                 stage('Compilation'){
                     dockerUtils.executeComand(config.name, config.compilation.command)
                 }
+
+                if (config.test.activate == true) {
+                    stage('Test Execution'){
+                        dockerUtils.executeComand(config.name, config.test.command)
+                    }
+                } 
+                
                 stage('Artifacts'){
                     sh "mkdir -p bin"
                     dockerUtils.copyCommand(config.name, config.compilation.path, config.compilation.file)
@@ -50,11 +58,7 @@ void call(){
                 }
             }
            
-            if (config.test.activate == true) {
-                stage('Test Execution'){
-                    dockerUtils.executeComand(config.name, config.test.command)
-                }
-            } 
+
 
             
         }
