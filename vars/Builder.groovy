@@ -9,9 +9,6 @@ void call(){
         stage('Read parameters') {
            properties([
                 parameters([
-                    //choice(name: 'ENTORNO', choices: ['desarrollo', 'producción'], description: 'Selecciona el entorno de despliegue')
-                    //choice(name: 'Rehacer Imagen', choices: ['Si', 'No'], description: 'Selecciona si quieres rehacer la imagen de docker'),
-                    //choice(name: 'Imagen', choices: ['api-sensor', 'sensor'], description: 'Selecciona que imagen de docker quieres construir')
                     ])
                 ])
         }
@@ -25,16 +22,23 @@ void call(){
             gitUtils.cloneRepository(rama, url)
         }
 
-        stage('Delete-Docker Image') {
-            
-            dockerUtils.buildImage("params['Imagen']", "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}") 
-        }
         stage('Build-Docker Image') {
             dockerUtils.buildImage("params['Imagen']", "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
         }
 
         stage('Build-Docker Container') {
             dockerUtils.buildContainer("params['Imagen']", "params['Imagen']")
+        }
+        stage('Compilation'){
+            echo 'Compilacion del codigo'
+        }
+
+        stage('Test Execution'){
+            echo 'Test del codigo'
+        }
+
+        stage('Artifacts'){
+            archiveArtifacts artifacts: 'ARTEFACTO.csv', allowEmptyArchive: true
         }
 
         stage('Delete-Docker Container') {
@@ -45,7 +49,12 @@ void call(){
             def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
             dockerUtils.removeImage('api-sensor')
         }
-        /*
+
+        /*stage('Mail') {
+            def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
+            dockerUtils.removeImage('api-sensor')
+        }
+
         stage('DB Connection') {
             def dbconector = new DBconector(this) //Contexto de la pipeline
             dbconector.executeQuery("SELECT * FROM audit")
