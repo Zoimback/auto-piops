@@ -13,6 +13,8 @@ void call(){
                 ])
         }
 
+        def config
+
         def dockerUtils = new DockerUtils(this) //Contexto de la pipeline
 
         stage('Checkout') {
@@ -22,8 +24,14 @@ void call(){
             gitUtils.cloneRepository(rama, url)
         }
 
+        stage('Obtener Archivo de Configuracion') {
+            echo 'Obteniendo archivo de configuracion'
+            config = readYaml file: '.ci-config.yml'
+
+        }
+
         stage('Build-Docker Image') {
-            dockerUtils.buildImage("params['Imagen']", "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
+            dockerUtils.buildImage(config.name, "${env.WORKSPACE}/Dockerfile", "${env.WORKSPACE}")
         }
 
         stage('Build-Docker Container') {
