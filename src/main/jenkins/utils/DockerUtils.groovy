@@ -104,7 +104,7 @@ class DockerUtils {
             throw new IllegalArgumentException("Parameter command must be provided")
         }
         // Ejecutar el comando en el contenedor de Docker
-        pipelineContext.sh "docker cp  ${containerName}:${path}${file} ."
+        pipelineContext.sh "docker cp  ${containerName}:${path}${file} bin/${file}"
     }
 
 
