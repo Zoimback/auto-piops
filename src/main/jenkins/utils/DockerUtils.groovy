@@ -32,7 +32,7 @@ class DockerUtils {
         }
 
         // Construir la imagen de Docker
-        pipelineContext.sh "docker build -t ${imageName} -f ${dockerfilePath} ${path}"
+        pipelineContext.sh "docker build --no-cache -t ${imageName} -f ${dockerfilePath} ${path}"
     }
 
     /**
