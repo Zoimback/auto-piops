@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Esta plantilla permite implementar procesos de Integración Continua (CI) y
+Esta pipeline permite implementar procesos de Integración Continua (CI) y
 Entrega Continua (CD) usando Jenkins, Docker y Git. Está diseñada para facilitar
 la automatización de compilación, pruebas y despliegue de aplicaciones.
 
