@@ -1,19 +1,5 @@
 # Auto PIOPS - Plantilla Jenkins CI/CD
 
----
-language: spanish
-post_title: "Plantilla Jenkins CI/CD - Auto PIOPS"
-author1: "DevOps Team"
-post_slug: "auto-piops-jenkins-template"
-microsoft_alias: "devops"
-featured_image: "[Imagen Jenkins CI/CD](https://via.placeholder.com/800x400?text=Jenkins+CI%2FCD)"
-categories: ["DevOps", "CI/CD", "Jenkins"]
-tags: ["jenkins", "docker", "groovy", "automation", "pipeline"]
-ai_note: "Este contenido fue generado con asistencia de IA"
-summary: "Plantilla completa para implementar procesos de CI/CD usando Jenkins, Docker y Git con pipelines automatizados"
-post_date: "2025-10-23"
----
-
 ## Descripción
 
 Esta plantilla permite implementar procesos de Integración Continua (CI) y
