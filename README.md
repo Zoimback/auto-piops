@@ -1,4 +1,4 @@
-# Auto PIOPS - Plantilla Jenkins CI/CD
+# Auto PIOPS - Jenkins CI/CD
 
 ## Descripción
 
