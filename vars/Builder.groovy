@@ -28,7 +28,10 @@ void call(){
 
             stage('Obtener Archivo de Configuracion') {
                 echo 'Obteniendo archivo de configuracion'
+                echo 'Hola'
                 config = readYaml file: 'config/.ci-config.yml'
+                echo "Config cargado: ${config}"
+
 
             }
 
